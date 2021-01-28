@@ -3,8 +3,16 @@ session_start();
 require 'auth.php';
 ini_set('display_errors', 1);
 
-if($_SESSION['login'] == true){
+if(isset($_SESSION['login'])){
   header('Location: index.php');
+}
+
+if(isset($_POST['task'])){
+  switch ($_POST['task']) {
+    case 'checkemail':
+      CekEmail();
+      break;
+  }
 }
 
 if(isset($_POST['login'])){
@@ -78,7 +86,7 @@ if(isset($_POST['login'])){
                       <input type="checkbox" checked="checked"/>
                       <div class="control__indicator"></div>
                     </label>
-                    <span class="ml-auto"><a href="#" data-toggle="modal" data-target="#exampleModal" class="forgot-pass">Forgot Password</a></span> 
+                    <span class="ml-auto resetpw"><a href="#" data-toggle="modal" data-target="#exampleModal" class="forgot-pass">Forgot Password</a></span> 
                   </div>
 
                   <input type="submit" value="Log In" name="login" class="btn btn-pill text-white btn-block btn-primary">
@@ -108,11 +116,11 @@ if(isset($_POST['login'])){
           <div class="modal-body">
             <div class="form-group">
               <label for="emailConfirm" class="text-secondary">Email :</label><br>
-              <input type="email" name="emailConfirm" class="form-control" required>
+              <input type="email" id="emailConfirm" class="form-control" required>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Go Ahead</button>
+          <div class="modal-footer float-right" style="display : block">
+            <button type="button" class="btn btn-success" id="checkemail">Go Ahead</button>
           </div>
         </form>    
       </div>

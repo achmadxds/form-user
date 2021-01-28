@@ -6,8 +6,8 @@ function Register($data)
 	global $conn;
 	$username        = strtolower(stripslashes($data['username']));
 	$password        = mysqli_escape_string($conn, $data['password']);
-	$email           = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-	$email           = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+	$email           = filter_var($email, FILTER_SANITIZE_EMAIL);
+	$email           = filter_var($email, FILTER_VALIDATE_EMAIL);
 	$confirmPassword = mysqli_escape_string($conn, $data['confirmPassword']);
 
 	$result          = mysqli_query($conn, 'SELECT `username` FROM `users` WHERE `username`="'.$username.'" ');
@@ -28,11 +28,19 @@ function Register($data)
 	return mysqli_affected_rows($conn); 
 }
 
-// function ResetPassword()
-// {
-// 	$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-// 	$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+function CekEmail()
+{
+	global $conn;
 
-// 	if()
-// }
+	$email = $_POST['emailcek'];
+	$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+	$getEmail = mysqli_query($conn, 'SELECT `email` FROM `users` WHERE `email`="'.$email.'" ');
+	
+	if(mysqli_fetch_assoc($getEmail)){
+		
+	}
+}
+
 ?>
