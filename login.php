@@ -3,16 +3,30 @@ session_start();
 require 'auth.php';
 ini_set('display_errors', 1);
 
-if(isset($_SESSION['login'])){
+if($_SESSION['login']){
   header('Location: index.php');
 }
 
 if(isset($_POST['task'])){
   switch ($_POST['task']) {
     case 'checkemail':
-      CekEmail();
-      break;
+    header('Content-Type: application/json');
+    $cekemail           = CekEmail();
+    $payload["payload"] = $cekemail;
+    $payload            = json_encode($payload);
+    echo $payload;
+    break;
+
+    case 'resetpw':
+    header('Content-Type: application/json');
+    $pwreset            = ResetPassword();
+    $loadpay["loadpay"] = $pwreset;
+    $loadpay            = json_encode($loadpay);
+    echo $loadpay;
+    break; 
+
   }
+  exit;
 }
 
 if(isset($_POST['login'])){
@@ -86,7 +100,7 @@ if(isset($_POST['login'])){
                       <input type="checkbox" checked="checked"/>
                       <div class="control__indicator"></div>
                     </label>
-                    <span class="ml-auto resetpw"><a href="#" data-toggle="modal" data-target="#exampleModal" class="forgot-pass">Forgot Password</a></span> 
+                    <span id="open-modall" class="ml-auto"><a href="#" data-toggle="modal" data-target="#exampleModal">Forgot Password</a></span> 
                   </div>
 
                   <input type="submit" value="Log In" name="login" class="btn btn-pill text-white btn-block btn-primary">
@@ -121,6 +135,34 @@ if(isset($_POST['login'])){
           </div>
           <div class="modal-footer float-right" style="display : block">
             <button type="button" class="btn btn-success" id="checkemail">Go Ahead</button>
+          </div>
+        </form>    
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalReset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">RESET PASSWORD</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="firstPassword" class="text-secondary">Password :</label><br>
+              <input type="text" id="firstPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword" class="text-secondary">Confirm Password :</label><br>
+              <input type="text" id="confirmPassword" class="form-control" required>
+            </div>
+          </div>
+          <div class="modal-footer float-right">
+            <button type="button" class="btn btn-success" id="resetopasswordu">Reset Password</button>
           </div>
         </form>    
       </div>

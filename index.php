@@ -1,15 +1,18 @@
 <?php  
 session_start();
 require 'auth.php';
+ini_set('display_errors', 1);
 
-if($_SESSION['login'] == false){
-	header('Location: login.php');
+if(!$_SESSION['login']){
+  header('Location: login.php');
 }
 
 if(isset($_POST['logout'])){
-	$_SESSION['login'] = false;
 	header('Location: login.php');
+	$_SESSION['login'] = false;
+	exit;
 }
+
 ?>
 
 <!DOCTYPE html>

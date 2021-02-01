@@ -2,7 +2,7 @@
 session_start();
 require 'auth.php';
 
-if($_SESSION['login'] == true){
+if($_SESSION['login']){
   header('Location: index.php');
 }
 
